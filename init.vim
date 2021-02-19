@@ -147,6 +147,10 @@ let g:go_def_mapping_enabled = 0
 let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
 let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
 
+let g:airline_section_z = '%3l/%L:%3v'
+let g:airline_left_sep = "\uE0B4"
+let g:airline_right_sep = "\uE0B6"
+let g:airline#extensions#coc#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
