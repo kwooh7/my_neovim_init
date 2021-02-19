@@ -139,6 +139,10 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 "=============================================================================
+"vimwiki
+let g:vimwiki_list = [{'path': '~\vimwiki', 'syntax': 'markdown', 'ext': '.wiki'}]
+let g:vimwiki_ext2syntax = {'.wiki': 'markdown'}
+
 let g:go_def_mapping_enabled = 0
 let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
 let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
