@@ -1,6 +1,6 @@
 filetype plugin indent on
 syntax on
-colorscheme one
+colorscheme space-vim-dark
 set go+=k
 set fileencodings=utf8,euc-kr
 set rnu
@@ -25,18 +25,13 @@ set bg=dark
 set vb t_vb=
 set signcolumn=yes
 set scrolloff=8
-set cursorcolumn
-set cursorline
 "For autocompletion
 set wildmode=list:longest
 set laststatus=2
 set autochdir
 set autoread
-
-if !has('gui_running')
-	set t_co=256
-endif
-
+set linespace=3
+set termguicolors
 set shell=cmd.exe
 tnoremap <ESC> <C-\><C-n>
 tnoremap :q! <C-\><C-n>:q!<CR>
@@ -67,14 +62,23 @@ call minpac#add('vimwiki/vimwiki')
 call minpac#add('fatih/vim-go')
 call minpac#add('elixir-editors/vim-elixir')
 call minpac#add('rust-lang/rust.vim')
-call minpac#add('voldikss/vim-floaterm')
 call minpac#add('tomasiser/vim-code-dark')
 call minpac#add('vim-airline/vim-airline')
 call minpac#add('vim-airline/vim-airline-themes')
 call minpac#add('mhinz/vim-startify')
+call minpac#add('liuchengxu/space-vim-theme')
+call minpac#add('liuchengxu/vista.vim')
+call minpac#add('wlangstroth/vim-racket')
+call minpac#add('luochen1990/rainbow')
 
 command! PackUpdate call minpac#update()
 command! PackClean call minpac#clean()
+
+let g:rainbow_active = 1
+
+"Vista.vim settings
+let g:vista_default_executive = 'coc'
+
 " -------------------------------------------------------------------------------------------------
 " coc.nvim default settings
 " -------------------------------------------------------------------------------------------------
@@ -139,6 +143,9 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 "=============================================================================
+"coc-explorer settings
+nnoremap <space>e :CocCommand explorer<CR>
+
 "vimwiki
 let g:vimwiki_list = [{'path': '~\vimwiki', 'syntax': 'markdown', 'ext': '.wiki'}]
 let g:vimwiki_ext2syntax = {'.wiki': 'markdown'}
@@ -147,27 +154,47 @@ let g:go_def_mapping_enabled = 0
 let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
 let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
 
-let g:airline_section_z = '%3l/%L:%3v'
-let g:airline_left_sep = "\uE0B4"
-let g:airline_right_sep = "\uE0B6"
+"let g:airline_section_z = '%3l/%L:%3v'
+"let g:airline_left_sep = "\uE0B4"
+"let g:airline_right_sep = "\uE0B6"
 let g:airline#extensions#coc#enabled = 1
-let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#enabled = 1
-
-let mapleader=" "
+let g:airline_powerline_fonts = 1
+let g:airline_theme='tomorrow'
+let mapleader=","
 map <leader>w :w!<CR>
 let g:indentLine_color_term = 000
 let g:indentLine_gui = '#A4E57E'
-let g:indentLine_char = ':'
+let g:indentLine_char = '|'
 
 let g:fern#renderer = "nerdfont"
 "let g:autofmt_autosave = 1
 
-let g:floaterm_keymap_new = '<F7>'
-let g:floaterm_keymap_toggle = '<F8>'
 
 noremap <silent> <F2> :Fern . -drawer -width=30 -toggle<CR><C-w>=
 nnoremap <F5> :buffers<CR>:buffer<Space>
+
+cnoremap <left> <Nop>
+cnoremap <right> <Nop>
+cnoremap <up> <Nop>
+cnoremap <down> <Nop>
+
+inoremap <left> <Nop>
+inoremap <right> <Nop>
+inoremap <up> <Nop>
+inoremap <down> <Nop>
+
+vnoremap <left> <Nop>
+vnoremap <right> <Nop>
+vnoremap <up> <Nop>
+vnoremap <down> <Nop>
+
+nnoremap <left> <Nop>
+nnoremap <right> <Nop>
+nnoremap <up> <Nop>
+nnoremap <down> <Nop>
+
 
 let g:python3_host_prog ='C:\Users\PC\AppData\Local\Programs\Python\Python39\python.EXE'
 
@@ -181,3 +208,8 @@ augroup THE_PRIMEAGEN
    autocmd!
    autocmd BufWritePre * :call TrimWhitespace()
 augroup END
+
+if has("autocmd")
+    autocmd bufwritepost $MYVIMRC source $MYVIMRC
+endif
+
