@@ -1,8 +1,9 @@
+set nocompatible
 filetype plugin indent on
 syntax on
-colorscheme space-vim-dark
+
 set go+=k
-set fileencodings=utf8,euc-kr
+set fileencodings=euc-kr,utf8
 set rnu
 set nu
 set tabstop=4
@@ -21,7 +22,6 @@ set is
 set ignorecase
 set smartcase
 set lbr
-set bg=dark
 set vb t_vb=
 set signcolumn=yes
 set scrolloff=8
@@ -31,10 +31,26 @@ set laststatus=2
 set autochdir
 set autoread
 set linespace=3
+"colorscheme
 set termguicolors
+set bg=dark
+set backspace=indent,eol,start
+set splitbelow
+set splitright
+set nrformats+=alpha
+""""
+let mapleader=","
+map <leader>w :w<CR>
+
 set shell=cmd.exe
+
 tnoremap <ESC> <C-\><C-n>
 tnoremap :q! <C-\><C-n>:q!<CR>
+inoremap hh <ESC>2li
+noremap <leader>y "+y
+noremap <leader>p "+p
+let g:vim_parinfer_mode = 'paren'
+
 
 function! s:coc_plugins(hooktype, name) abort
     execute 'packadd ' . a:name " <-- this is the key
@@ -70,10 +86,14 @@ call minpac#add('liuchengxu/space-vim-theme')
 call minpac#add('liuchengxu/vista.vim')
 call minpac#add('wlangstroth/vim-racket')
 call minpac#add('luochen1990/rainbow')
+call minpac#add('bhurlow/vim-parinfer')
+call minpac#add('dracula/vim', {'type' : 'opt', 'name':'dracula'})
 
 command! PackUpdate call minpac#update()
 command! PackClean call minpac#clean()
 
+packadd dracula
+colorscheme dracula
 let g:rainbow_active = 1
 
 "Vista.vim settings
@@ -147,26 +167,33 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 nnoremap <space>e :CocCommand explorer<CR>
 
 "vimwiki
-let g:vimwiki_list = [{'path': '~\vimwiki', 'syntax': 'markdown', 'ext': '.wiki'}]
+let g:vimwiki_list = [{'path': '~\vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
 let g:vimwiki_ext2syntax = {'.wiki': 'markdown'}
+let g:vimwiki_listsyms = '✗○◐●✓'
+au FileType markdown,vimwiki noremap <leader>mc :call ToggleConcealLevel()<CR>
+function! ToggleConcealLevel()
+    if &conceallevel
+        setlocal conceallevel=0
+    else
+        setlocal conceallevel=2
+    endif
+endfunction
 
 let g:go_def_mapping_enabled = 0
 let g:fullscreen#start_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 1)"
 let g:fullscreen#stop_command = "call rpcnotify(0, 'Gui', 'WindowFullScreen', 0)"
 
-"let g:airline_section_z = '%3l/%L:%3v'
-"let g:airline_left_sep = "\uE0B4"
-"let g:airline_right_sep = "\uE0B6"
+let g:airline_left_sep = "\uE0C0"
+let g:airline_right_sep = "\uE0C2"
+let g:airline_section_z = "%p%% : \ue0a1:%l/%L: Col:%c"
 let g:airline#extensions#coc#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-let g:airline_theme='tomorrow'
-let mapleader=","
-map <leader>w :w!<CR>
+let g:airline_theme='twofirewatch'
 let g:indentLine_color_term = 000
 let g:indentLine_gui = '#A4E57E'
-let g:indentLine_char = '|'
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 
 let g:fern#renderer = "nerdfont"
 "let g:autofmt_autosave = 1
@@ -209,7 +236,4 @@ augroup THE_PRIMEAGEN
    autocmd BufWritePre * :call TrimWhitespace()
 augroup END
 
-if has("autocmd")
-    autocmd bufwritepost $MYVIMRC source $MYVIMRC
-endif
 
